@@ -1,0 +1,10 @@
+__pycache__/
+db.sqlite3
+
+# arquivos enviados pelos produtores e estáticos coletados
+media/
+staticfiles/
+
+# front-end (React)
+node_modules/
+frontend/dist/
