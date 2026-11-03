@@ -53,6 +53,8 @@ class CancaoSerializer(serializers.ModelSerializer):
 class AlbumSerializer(serializers.ModelSerializer):
     artista = serializers.ReadOnlyField(
         source='usuario.paginaartista.nome_artistico')
+    # id da página do artista, para o link na tela do álbum
+    pagina_artista = serializers.ReadOnlyField(source='usuario.paginaartista.id')
     cancoes = CancaoSerializer(many=True, read_only=True,
                                source='listar_cancoes')
     # na escrita o front-end manda só os ids, já na ordem das faixas
@@ -67,8 +69,8 @@ class AlbumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Album
-        fields = ['id', 'usuario', 'artista', 'nome', 'capa_url',
-                  'data_criacao', 'cancoes', 'cancoes_ids',
+        fields = ['id', 'usuario', 'artista', 'pagina_artista', 'nome',
+                  'capa_url', 'data_criacao', 'cancoes', 'cancoes_ids',
                   'quantidade_cancoes', 'duracao_total', 'total_reproducoes']
         read_only_fields = ['usuario', 'data_criacao']
         extra_kwargs = {
