@@ -1,0 +1,1106 @@
+/* SoundShare — estilo inspirado nos layouts do UX Pilot (tema escuro + verde) */
+
+:root {
+  --fundo: #0b0f19;
+  --fundo-menu: #0e1322;
+  --cartao: #151b2b;
+  --cartao-claro: #1c2438;
+  --borda: #262f45;
+  --texto: #f1f5f9;
+  --texto-suave: #94a3b8;
+  --verde: #22c55e;
+  --verde-escuro: #16a34a;
+  --verde-fundo: rgba(34, 197, 94, 0.12);
+  --vermelho: #ef4444;
+  --vermelho-fundo: rgba(239, 68, 68, 0.12);
+  --raio: 12px;
+  --altura-player: 84px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background-color: var(--fundo);
+  color: var(--texto);
+  line-height: 1.4;
+}
+
+a {
+  color: var(--verde);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3 {
+  margin: 0 0 0.5em;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+/* ---------- Leiaute geral (grid: menu à esquerda, conteúdo, player embaixo) ---------- */
+
+.app {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-areas: "menu conteudo";
+  min-height: 100vh;
+}
+
+.app.com-player {
+  grid-template-areas:
+    "menu conteudo"
+    "player player";
+  grid-template-rows: 1fr var(--altura-player);
+}
+
+.menu-lateral {
+  grid-area: menu;
+  background-color: var(--fundo-menu);
+  border-right: 1px solid var(--borda);
+  padding: 24px 16px;
+}
+
+.conteudo {
+  grid-area: conteudo;
+  padding: 40px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 32px;
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.logo-icone {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--verde);
+  color: var(--fundo);
+}
+
+.menu-lateral ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.titulo-menu {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin: 24px 12px 8px;
+}
+
+.item-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  color: var(--texto-suave);
+  cursor: pointer;
+  text-align: left;
+}
+
+.item-menu:hover {
+  background-color: var(--cartao);
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.item-menu.ativo {
+  background-color: var(--verde-fundo);
+  color: var(--verde);
+}
+
+.item-menu.sair {
+  color: var(--vermelho);
+}
+
+.usuario-logado {
+  cursor: default;
+}
+
+.usuario-logado:hover {
+  background: none;
+  color: var(--texto-suave);
+}
+
+/* ---------- Componentes comuns ---------- */
+
+.cabecalho-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.cabecalho-pagina h1 {
+  font-size: 2rem;
+}
+
+.subtitulo {
+  color: var(--texto-suave);
+  margin: 0;
+}
+
+.cartao {
+  background-color: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 24px;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background-color: var(--cartao);
+  color: var(--texto);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background-color: var(--cartao-claro);
+  text-decoration: none;
+}
+
+.botao:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.botao-primario {
+  background-color: var(--verde);
+  border-color: var(--verde);
+  color: #04130a;
+}
+
+.botao-primario:hover {
+  background-color: var(--verde-escuro);
+}
+
+.botao-perigo {
+  color: var(--vermelho);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.botao-perigo:hover {
+  background-color: var(--vermelho-fundo);
+}
+
+.botao-redondo {
+  border-radius: 999px;
+  padding: 12px 28px;
+}
+
+.botao-icone {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--texto-suave);
+  cursor: pointer;
+}
+
+.botao-icone:hover {
+  color: var(--texto);
+  background-color: var(--cartao-claro);
+}
+
+.grupo-botoes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mensagem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.mensagem-erro {
+  background-color: var(--vermelho-fundo);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.mensagem-sucesso {
+  background-color: var(--verde-fundo);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
+
+.vazio {
+  color: var(--texto-suave);
+  padding: 32px;
+  text-align: center;
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio);
+}
+
+.carregando {
+  color: var(--texto-suave);
+}
+
+/* ---------- Formulários ---------- */
+
+.campo {
+  margin-bottom: 18px;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+
+.campo input[type="text"],
+.campo input[type="password"],
+.campo input[type="url"],
+.campo input[type="search"],
+.campo textarea,
+.campo select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background-color: var(--fundo);
+  color: var(--texto);
+}
+
+.campo textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+  outline: 2px solid var(--verde);
+  border-color: transparent;
+}
+
+.campo.com-erro input,
+.campo.com-erro textarea {
+  border-color: var(--vermelho);
+}
+
+.erro-campo {
+  display: block;
+  color: var(--vermelho);
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+.contador {
+  float: right;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--texto);
+}
+
+.campo-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--verde);
+}
+
+.dica {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  margin: 6px 0 0;
+}
+
+/* ---------- Login e cadastro ---------- */
+
+.tela-acesso {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.marca {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.marca .logo-icone {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  margin: 0 auto 16px;
+}
+
+.marca h1 {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.cartao-acesso {
+  width: 100%;
+  max-width: 450px;
+}
+
+.cartao-acesso .botao-primario {
+  width: 100%;
+  padding: 14px;
+}
+
+.rodape-acesso {
+  text-align: center;
+  color: var(--texto-suave);
+  border-top: 1px solid var(--borda);
+  margin-top: 24px;
+  padding-top: 20px;
+}
+
+.rodape-acesso a {
+  display: block;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.tipos-conta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tipo-conta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background-color: var(--fundo);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.tipo-conta.selecionado {
+  border-color: var(--verde);
+  background-color: var(--verde-fundo);
+  color: var(--verde);
+}
+
+.copyright {
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  margin-top: 24px;
+}
+
+/* ---------- Capas e cabeçalho de álbum/playlist ---------- */
+
+.capa {
+  border-radius: var(--raio);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.capa-grande {
+  width: 220px;
+  height: 220px;
+}
+
+.capa-media {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.capa-mini {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+}
+
+.capa-vazia {
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.75);
+  background: linear-gradient(135deg, #0f766e, #14532d 55%, #1e1b4b);
+}
+
+.cabecalho-colecao {
+  display: flex;
+  gap: 32px;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+.cabecalho-colecao h1 {
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+.rotulo {
+  color: var(--verde);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.totais {
+  color: var(--texto-suave);
+  margin: 0 0 20px;
+}
+
+.totais strong {
+  color: var(--texto);
+}
+
+/* ---------- Tabela de faixas ---------- */
+
+.tabela-container {
+  background-color: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  overflow-x: auto;
+}
+
+.tabela-faixas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-faixas th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.tabela-faixas td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--borda);
+  color: var(--texto-suave);
+}
+
+.tabela-faixas tr:last-child td {
+  border-bottom: none;
+}
+
+.tabela-faixas tbody tr:hover {
+  background-color: var(--cartao-claro);
+}
+
+.tabela-faixas tr.tocando .titulo-faixa {
+  color: var(--verde);
+}
+
+.titulo-faixa {
+  color: var(--texto) !important;
+  font-weight: 600;
+}
+
+.col-num {
+  width: 56px;
+}
+
+.col-dur {
+  width: 90px;
+}
+
+.col-acao {
+  width: 56px;
+  text-align: right;
+}
+
+.botao-play-linha {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--texto-suave);
+  cursor: pointer;
+}
+
+/* o número da faixa vira um botão de play quando o mouse passa na linha */
+.botao-play-linha svg {
+  display: none;
+}
+
+tr:hover .botao-play-linha .numero-faixa {
+  display: none;
+}
+
+tr:hover .botao-play-linha svg {
+  display: block;
+  color: var(--verde);
+}
+
+/* ---------- Grades de cartões (álbuns, artistas, playlists) ---------- */
+
+.grade-cartoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.cartao-item {
+  display: block;
+  background-color: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 14px;
+  color: var(--texto);
+}
+
+.cartao-item:hover {
+  background-color: var(--cartao-claro);
+  text-decoration: none;
+}
+
+.cartao-item h3 {
+  font-size: 1rem;
+  margin: 12px 0 4px;
+}
+
+.cartao-item p {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.cartao-novo {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  border-style: dashed;
+  color: var(--texto-suave);
+}
+
+/* ---------- Página de artista ---------- */
+
+.cabecalho-artista {
+  padding: 40px;
+  border-radius: var(--raio);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(30, 27, 75, 0.6));
+  margin-bottom: 32px;
+}
+
+.cabecalho-artista h1 {
+  font-size: 3rem;
+}
+
+.descricao-artista {
+  max-width: 720px;
+  color: var(--texto);
+  white-space: pre-line;
+}
+
+.estatistica-destaque {
+  color: var(--verde);
+  font-weight: 700;
+}
+
+/* ---------- Editar perfil / formulários com coluna lateral ---------- */
+
+.duas-colunas {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.estatisticas dl {
+  margin: 0;
+}
+
+.estatisticas div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.estatisticas dt {
+  color: var(--texto-suave);
+}
+
+.estatisticas dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.numero-grande {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--verde);
+  text-align: center;
+  margin: 8px 0 0;
+}
+
+.legenda {
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.titulo-cartao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.titulo-cartao h2 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.lista-conteudo {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-conteudo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: var(--fundo);
+  color: var(--texto);
+}
+
+.item-conteudo:hover {
+  background-color: var(--cartao-claro);
+  text-decoration: none;
+}
+
+.item-conteudo strong {
+  display: block;
+}
+
+.item-conteudo span {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.item-conteudo .botao {
+  margin-left: auto;
+  padding: 6px 12px;
+}
+
+/* ---------- Upload de música ---------- */
+
+.area-upload {
+  border: 2px dashed var(--borda);
+  border-radius: var(--raio);
+  padding: 40px 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.area-upload.arrastando {
+  border-color: var(--verde);
+  background-color: var(--verde-fundo);
+}
+
+.area-upload .icone-upload {
+  display: inline-grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--verde-fundo);
+  color: var(--verde);
+  margin-bottom: 12px;
+}
+
+.area-upload input[type="file"] {
+  display: none;
+}
+
+.arquivo-escolhido {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background-color: var(--fundo);
+  margin-bottom: 18px;
+}
+
+.arquivo-escolhido .botao {
+  margin-left: auto;
+}
+
+.linha-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ---------- Editor de álbum/playlist ---------- */
+
+.lista-selecao {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lista-selecao li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background-color: var(--fundo);
+}
+
+.lista-selecao li div:not(.capa) {
+  flex: 1;
+  min-width: 0;
+}
+
+.lista-selecao strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lista-selecao span {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.resultados-busca {
+  margin-top: 12px;
+}
+
+/* ---------- Barra do player ---------- */
+
+.barra-player {
+  grid-area: player;
+  position: sticky;
+  bottom: 0;
+  height: var(--altura-player);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  background-color: var(--fundo-menu);
+  border-top: 1px solid var(--borda);
+}
+
+.barra-faixa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--texto);
+  min-width: 0;
+}
+
+.barra-faixa:hover {
+  text-decoration: none;
+}
+
+.barra-faixa strong,
+.barra-faixa span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barra-faixa span {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.barra-controles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.botoes-player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.botao-play {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--texto);
+  color: var(--fundo);
+  cursor: pointer;
+}
+
+.botao-play.grande {
+  width: 72px;
+  height: 72px;
+}
+
+.progresso {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 480px;
+  font-size: 0.75rem;
+  color: var(--texto-suave);
+}
+
+.progresso input,
+.barra-volume input {
+  flex: 1;
+  accent-color: var(--verde);
+}
+
+.barra-volume {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  color: var(--texto-suave);
+}
+
+.barra-volume input {
+  max-width: 120px;
+}
+
+/* ---------- Tela de reprodução ---------- */
+
+.tela-tocando {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+}
+
+.faixa-atual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.faixa-atual .capa-vazia {
+  width: min(380px, 100%);
+  aspect-ratio: 1;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+.faixa-atual h1 {
+  font-size: 2.25rem;
+}
+
+.faixa-atual .artista {
+  color: var(--verde);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.faixa-atual .progresso {
+  margin: 24px 0 16px;
+}
+
+.fila {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fila button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background-color: var(--fundo);
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+}
+
+.fila button.atual {
+  border-color: var(--verde);
+  background-color: var(--verde-fundo);
+}
+
+.fila span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.fila .tocando-agora {
+  color: var(--verde);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* ---------- Responsivo (aula 2: media queries) ---------- */
+
+@media only screen and (max-width: 900px) {
+  .app,
+  .app.com-player {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "menu"
+      "conteudo";
+    grid-template-rows: auto 1fr;
+  }
+
+  .app.com-player {
+    grid-template-areas:
+      "menu"
+      "conteudo"
+      "player";
+    grid-template-rows: auto 1fr var(--altura-player);
+  }
+
+  .menu-lateral {
+    border-right: none;
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .menu-lateral nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .menu-lateral ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .titulo-menu {
+    display: none;
+  }
+
+  .conteudo {
+    padding: 24px 16px;
+  }
+
+  .duas-colunas,
+  .tela-tocando,
+  .linha-campos {
+    grid-template-columns: 1fr;
+  }
+
+  .cabecalho-colecao {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cabecalho-colecao h1,
+  .cabecalho-artista h1 {
+    font-size: 2rem;
+  }
+
+  .col-opcional {
+    display: none;
+  }
+
+  .barra-player {
+    grid-template-columns: 1fr auto;
+  }
+
+  .barra-volume,
+  .barra-controles .progresso {
+    display: none;
+  }
+}
