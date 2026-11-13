@@ -1,7 +1,9 @@
 // Comunicação com a API do Django (/api/v1/)
 // o token de sessão fica no Local Storage depois do login (LOG001)
 
-const BASE = '/api/v1/'
+// no desenvolvimento a API é o runserver; no Render o endereço vem da
+// variável VITE_API_URL, lida pelo Vite na hora do build
+const BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1/'
 
 export function lerToken() {
   return localStorage.getItem('token')

@@ -18,3 +18,7 @@ User = get_user_model()
 User.objects.filter(username=os.environ["DJANGO_SUPERUSER_USERNAME"]).exists() or \
     User.objects.create_superuser(os.environ["DJANGO_SUPERUSER_USERNAME"], os.environ["DJANGO_SUPERUSER_EMAIL"], os.environ["DJANGO_SUPERUSER_PASSWORD"])
 EOF
+
+# usuários e músicas de exemplo para a demonstração
+# (o disco do Render é apagado a cada deploy, então os áudios são gerados de novo)
+echo "from api.exemplos import carregar; carregar()" | python manage.py shell

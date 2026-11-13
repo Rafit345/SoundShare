@@ -34,6 +34,10 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 
+# o Render atende em HTTPS e repassa para o Django em HTTP; sem isto os links
+# dos áudios saem com http:// e o navegador bloqueia na página HTTPS
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 # Application definition
 
@@ -46,12 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',  # token de sessão usado pelo front-end (LOG001)
+    'corsheaders',  # React em outra origem (aula 6)
     'musica.apps.MusicaConfig',
     'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # o mais alto possível, antes do WhiteNoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,6 +66,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# origens que podem chamar a API: o Vite no desenvolvimento e o site
+# estático do Render (endereço na variável de ambiente FRONTEND_URL)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+if os.environ.get("FRONTEND_URL"):
+    CORS_ALLOWED_ORIGINS.append(os.environ["FRONTEND_URL"])
 
 ROOT_URLCONF = 'soundshare.urls'
 
