@@ -16,6 +16,7 @@ Back-end (no ambiente virtual do curso):
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
+echo "from api.exemplos import carregar; carregar()" | python manage.py shell   # opcional: dados de exemplo
 python manage.py runserver
 ```
 
@@ -27,8 +28,37 @@ npm install
 npm run dev
 ```
 
-Abrir http://localhost:5173/. No desenvolvimento o Vite repassa `/api` e `/media`
-para o Django em http://127.0.0.1:8000/.
+Abrir http://localhost:5173/. Como na aula 6, o React (porta 5173) chama a API direto em
+http://127.0.0.1:8000/ e o Django libera essa origem com o `django-cors-headers`.
+
+Contas de exemplo (criadas pelo `api/exemplos.py`, senha `soundshare2026`): produtores
+`beatflux` e `solarecho`, ouvinte `ana`.
+
+## Deploy no Render
+
+São dois serviços, como no laboratório: a API (Web Service) e o React (Static Site),
+que conversam por CORS.
+
+1. **Banco:** New + → PostgreSQL (plano Free). Copiar a *Internal Database URL*.
+   O banco gratuito expira depois de algumas semanas: criar perto da entrega.
+2. **API:** New + → Web Service → repositório do GitHub.
+   - Build Command: `./build.sh` — Start Command: `gunicorn soundshare.wsgi`
+   - Environment: `PYTHON_VERSION` = `3.12.10`, `DATABASE_URL` (do passo 1), `SECRET_KEY`
+     (qualquer texto longo), `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL`,
+     `DJANGO_SUPERUSER_PASSWORD` e, depois do passo 3, `FRONTEND_URL` com o endereço do site
+     (ex.: `https://soundshare-web.onrender.com`, sem barra no fim).
+3. **Front-end:** New + → Static Site → mesmo repositório.
+   - Root Directory: `frontend` — Build Command: `npm install && npm run build` —
+     Publish Directory: `dist`
+   - Environment: `VITE_API_URL` = endereço da API + `/api/v1/`
+     (ex.: `https://soundshare-api.onrender.com/api/v1/`)
+   - Redirects/Rewrites: Source `/*`, Destination `/index.html`, Action **Rewrite**
+     (senão recarregar uma página como `/playlists/1` dá 404).
+4. Voltar na API, preencher o `FRONTEND_URL` e fazer *Manual Deploy*.
+
+Cuidados: no plano gratuito a API "dorme" sem acesso e demora ~1 min no primeiro pedido
+(abrir antes de apresentar). O disco também é apagado a cada deploy ou reinício: músicas
+enviadas pelo site somem, mas as de exemplo são recriadas pelo `build.sh`.
 
 ## Telas e casos de uso
 
